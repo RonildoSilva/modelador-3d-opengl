@@ -31,15 +31,7 @@ public:
 
     float getSX();
     float getSY();
-    float getSZ();
-
-    void addSlices() override;
-    void addStacks() override;
-    void decSlices() override;
-    void decStacks() override;
-
-    int getSlices() override;
-    int getStacks() override;    
+    float getSZ(); 
 
     std::string getNome() override;
 

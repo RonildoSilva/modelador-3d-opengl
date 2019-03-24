@@ -21,13 +21,13 @@ public:
     void setInnerRadius(float innerRadius);
     void setOutterRadius(float outterRadius);
 
-    void addSlices() override;
-    void addStacks() override;
-    void decSlices() override;
-    void decStacks() override;
+    void addSlices();
+    void addStacks();
+    void decSlices();
+    void decStacks();
 
-    int getSlices() override;
-    int getStacks() override;
+    int getSlices();
+    int getStacks();
 
 
     std::string getNome() override;

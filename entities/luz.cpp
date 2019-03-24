@@ -23,15 +23,6 @@ float Luz::getSX() { return this->sx; }
 float Luz::getSY() { return this->sy; }
 float Luz::getSZ() { return this->sz; }
 
-void Luz::addSlices() { this->slices++; }
-void Luz::decSlices() { this->slices--; }
-
-void Luz::addStacks() { this->stacks++; }
-void Luz::decStacks() { this->stacks--; }
-
-int Luz::getSlices() { return this->slices; }
-int Luz::getStacks() { return this->stacks; }
-
 void Luz::desenha(){
     //habilitando transparencias
     glEnable(GL_BLEND);

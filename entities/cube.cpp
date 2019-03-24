@@ -14,14 +14,6 @@ string Cube::getNome()
     return this->nome;
 }
 
-void Cube::addSlices() {}
-void Cube::decSlices() {}
-void Cube::addStacks() {}
-void Cube::decStacks() {}
-
-int Cube::getSlices() { return 0; }
-int Cube::getStacks() { return 0; }
-
 void Cube::desenha()
 {
     //sistema local

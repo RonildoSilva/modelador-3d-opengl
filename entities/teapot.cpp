@@ -14,14 +14,6 @@ string Teapot::getNome()
     return this->nome;
 }
 
-void Teapot::addSlices() {}
-void Teapot::decSlices() {}
-void Teapot::addStacks() {}
-void Teapot::decStacks() {}
-
-int Teapot::getSlices() { return 0; }
-int Teapot::getStacks() { return 0; }
-
 void Teapot::desenha()
 {
     //sistema local

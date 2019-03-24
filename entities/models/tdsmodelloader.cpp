@@ -303,12 +303,4 @@ void TdsModelLoader::desenha()
 float TdsModelLoader::getSize() {}
 void TdsModelLoader::setSize(float size){}
 
-void TdsModelLoader::addSlices(){}
-void TdsModelLoader::addStacks(){}
-
-void TdsModelLoader::decSlices(){}
-void TdsModelLoader::decStacks(){}
-int TdsModelLoader::getSlices(){}
-int TdsModelLoader::getStacks(){}
-
 std::string TdsModelLoader::getNome() { return this->nome; }

@@ -457,27 +457,7 @@ void OGLWidget::keyPressEvent(QKeyEvent *event)
         break;
 
     case Qt::Key_Plus:
-    case Qt::Key_M:
-        if(!listaModelos.empty()){
-            if (listaModelos.at(cont)->getSlices() > 3 && listaModelos.at(cont)->getStacks() > 3)
-            {
-                listaModelos.at(cont)->addSlices();
-                listaModelos.at(cont)->addStacks();
-            }
-        }
         break;
-
-    case Qt::Key_Minus:
-    case Qt::Key_N:
-        if(!listaModelos.empty()){
-            if (listaModelos.at(cont)->getSlices() > 3 && listaModelos.at(cont)->getStacks() > 3)
-            {
-                listaModelos.at(cont)->decSlices();
-                listaModelos.at(cont)->decStacks();
-            }
-        }
-        break;
-
     case Qt::Key_R:
         if(!listaModelos.empty()){
             listaModelos.erase (listaModelos.begin()+cont);

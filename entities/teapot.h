@@ -17,14 +17,6 @@ public:
     float getSize();
     void  setSize(float size);
 
-    void addSlices() override;
-    void addStacks() override;
-    void decSlices() override;
-    void decStacks() override;
-
-    int getSlices() override;
-    int getStacks() override;
-
     std::string getNome() override;
 
 private:

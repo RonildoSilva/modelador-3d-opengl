@@ -14,19 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="slicestackSubButton">
-    <property name="geometry">
-     <rect>
-      <x>1040</x>
-      <y>480</y>
-      <width>111</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Slice / Stack -</string>
-    </property>
-   </widget>
    <widget class="OGLWidget" name="openGLWidget">
     <property name="geometry">
      <rect>
@@ -35,19 +22,6 @@
       <width>1000</width>
       <height>650</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="slicestackAddButton">
-    <property name="geometry">
-     <rect>
-      <x>1040</x>
-      <y>450</y>
-      <width>111</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Slice / Stack +</string>
     </property>
    </widget>
    <widget class="QPushButton" name="nextObject">
@@ -349,7 +323,7 @@
      <x>0</x>
      <y>0</y>
      <width>1342</width>
-     <height>19</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArquivo">
@@ -412,9 +386,15 @@
     <addaction name="actionPerspectiva"/>
     <addaction name="actionOrtogonal"/>
    </widget>
+   <widget class="QMenu" name="menuCameras">
+    <property name="title">
+     <string>Cameras</string>
+    </property>
+   </widget>
    <addaction name="menuArquivo"/>
    <addaction name="menuAdicionar"/>
    <addaction name="menuViews"/>
+   <addaction name="menuCameras"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -503,7 +483,7 @@
   </action>
   <action name="actionArvore">
    <property name="text">
-    <string>Arvore</string>
+    <string>Tree</string>
    </property>
   </action>
   <action name="actionCarregar3DS">

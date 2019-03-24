@@ -169,14 +169,6 @@ void ObjModelLoader::desenha()
 float ObjModelLoader::getSize() {}
 void ObjModelLoader::setSize(float size){}
 
-void ObjModelLoader::addSlices(){}
-void ObjModelLoader::addStacks(){}
-
-void ObjModelLoader::decSlices(){}
-void ObjModelLoader::decStacks(){}
-int ObjModelLoader::getSlices(){}
-int ObjModelLoader::getStacks(){}
-
 string ObjModelLoader::getNome() { return this->nome; }
 
 vector<string>* ObjModelLoader::GetSplittedStrings(string text, char delimeter)

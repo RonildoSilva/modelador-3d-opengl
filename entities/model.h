@@ -64,15 +64,6 @@ public:
     virtual void setEixo(bool eixo);
     virtual bool isEixo();
 
-    virtual void addStacks() = 0;
-    virtual void addSlices() = 0;
-
-    virtual void decStacks() = 0;
-    virtual void decSlices() = 0;
-
-    virtual int getSlices() = 0;
-    virtual int getStacks() = 0;
-
     virtual std::string getNome() = 0;
 
     std::string nome = "Model";
