@@ -7,12 +7,14 @@
 #include "oglwidget.h"
 #include "entities/torus.h"
 #include "entities/teapot.h"
+#include "entities/models/objmodelloader.h"
 
 using namespace  std;
 
 vector<Model*> listaModelos;
 Torus * torus;
 Teapot * teapot;
+ObjModelLoader * objModelLoader;
 
 OGLWidget::OGLWidget(QWidget *parent)
     : QGLWidget(parent)
@@ -25,7 +27,8 @@ void OGLWidget::initializeGL()
 {
     torus = new Torus();
     teapot = new Teapot();
-    listaModelos.push_back(teapot);
+    objModelLoader = new ObjModelLoader("../modelador-3d-opengl/data/obj/Kratos.obj", "Kratos");
+    listaModelos.push_back(objModelLoader);
 
     glClearColor(1,1,1,1);
     //glClearColor(0.3,0.3,0.3,1.0);
@@ -101,7 +104,7 @@ void OGLWidget::paintGL()
         //Desenha::drawBox( -1.0,-1.0,-1.0, 1.0,1.0,1.0 );
     glPopMatrix();
     */
-    torus->desenha();
+
     for (int var = 0; var < listaModelos.size(); ++var) {
         listaModelos.at(var)->desenha();
     }

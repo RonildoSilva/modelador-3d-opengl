@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     entities/cube.cpp \
     entities/luz.cpp \
     bib/Extra.cpp \
-    bib/GUI.cpp
+    bib/GUI.cpp \
+    entities/models/objmodelloader.cpp
 
 SOURCES += mainwindow.cpp \
     bib/Camera.cpp \
@@ -48,7 +49,8 @@ HEADERS  += mainwindow.h \
     entities/cube.h \
     entities/luz.h \
     bib/Extra.h \
-    bib/GUI.h
+    bib/GUI.h \
+    entities/models/objmodelloader.h
 
 FORMS    += mainwindow.ui
 
