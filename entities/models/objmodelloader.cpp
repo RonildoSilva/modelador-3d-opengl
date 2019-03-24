@@ -1,4 +1,4 @@
-#include "entities/models/objmodelloader.h"
+#include "objmodelloader.h"
 
 using namespace std;
 

@@ -12,8 +12,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Modelador3D
 TEMPLATE = app
 
-
-LIBS += -lGLU -lglut
+DEFINES += USE_SDL
+LIBS += -lglut -l3ds -lGLU -lGL -lm -lSDL -lSDL_image
 
 SOURCES += main.cpp \
     entities/torus.cpp \
