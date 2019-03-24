@@ -12,52 +12,57 @@ class Model
 {
 public:
     Model();
+
     virtual void desenha() = 0;
 
-    virtual void addAX(float ax) = 0;
-    virtual void addAY(float ay) = 0;
-    virtual void addAZ(float az) = 0;
+    /** Manipulation Angle Functions **/
+    virtual void setAX(float ax);
+    virtual void setAY(float ay);
+    virtual void setAZ(float az);
 
-    virtual void setAX(float ax) = 0;
-    virtual void setAY(float ay) = 0;
-    virtual void setAZ(float az) = 0;
+    virtual float getAX();
+    virtual float getAY();
+    virtual float getAZ();
 
-    virtual float getAX() = 0;
-    virtual float getAY() = 0;
-    virtual float getAZ() = 0;
+    virtual void addAX(float ax);
+    virtual void addAY(float ay);
+    virtual void addAZ(float az);
 
-    virtual void setTX(float tx) = 0;
-    virtual void setTY(float ty) = 0;
-    virtual void setTZ(float tz) = 0;
+    /** Manipulation Translate Functions **/
+    virtual float getTX();
+    virtual float getTY();
+    virtual float getTZ();
 
-    virtual void addTX(float tx) = 0;
-    virtual void addTY(float ty) = 0;
-    virtual void addTZ(float tz) = 0;
+    virtual void setTX(float tx);
+    virtual void setTY(float ty);
+    virtual void setTZ(float tz);
 
-    virtual void setSX(float sx) = 0;
-    virtual void setSY(float sy) = 0;
-    virtual void setSZ(float sz) = 0;
+    virtual void addTX(float tx);
+    virtual void addTY(float ty);
+    virtual void addTZ(float tz);
 
-    virtual void addSX(float sx) = 0;
-    virtual void addSY(float sy) = 0;
-    virtual void addSZ(float sz) = 0;
+    /** Manipulation Scale Functions **/
+    virtual float getSX();
+    virtual float getSY();
+    virtual float getSZ();
 
-    virtual float getSX() = 0;
-    virtual float getSY() = 0;
-    virtual float getSZ() = 0;
+    virtual void setSX(float sx);
+    virtual void setSY(float sy);
+    virtual void setSZ(float sz);
 
-    virtual float getTX() = 0;
-    virtual float getTY() = 0;
-    virtual float getTZ() = 0;
+    virtual void addSX(float sx);
+    virtual void addSY(float sy);
+    virtual void addSZ(float sz);
 
-    virtual void setSelecionado(bool selecionado) = 0;
-    virtual bool isSelecionado() = 0;
+    /** Manipulation Selection Functions **/
+    virtual void setSelecionado(bool selecionado);
+    virtual bool isSelecionado();
 
-    virtual void setSombra(bool sombra) = 0;
-    virtual bool isSombra() = 0;
+    virtual void setSombra(bool sombra);
+    virtual bool isSombra();
 
-    virtual void setEixo(bool eixo) = 0;
-    virtual bool isEixo() = 0;
+    virtual void setEixo(bool eixo);
+    virtual bool isEixo();
 
     virtual void addStacks() = 0;
     virtual void addSlices() = 0;
@@ -83,6 +88,10 @@ private:
     float sx = 1.0;
     float sy = 1.0;
     float sz = 1.0;
+
+    bool selecionado = false;
+    bool sombra = false;
+    bool eixo = false;
 };
 
 #endif // MODEL_H

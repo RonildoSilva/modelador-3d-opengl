@@ -680,14 +680,16 @@ void OGLWidget::carregarEstado(){
             file >> ax >> ay >> az;
             file >> sx >> sy >> sz;
 
-            listaModelos.push_back(new Torus(tx, ty, tz, ax, ay, az, sx, sy, sz));
+            //listaModelos.push_back(new Torus(tx, ty, tz, ax, ay, az, sx, sy, sz));
+            listaModelos.push_back(new Torus());
         }
         else if(nomeModelo == "Teapot"){
             file >> tx >> ty >> tz;
             file >> ax >> ay >> az;
             file >> sx >> sy >> sz;
 
-            listaModelos.push_back(new Teapot(tx,ty,tz, ax,ay,az, sx,sy,sz));
+            //listaModelos.push_back(new Teapot(tx,ty,tz, ax,ay,az, sx,sy,sz));
+            listaModelos.push_back(new Teapot());
         }
 
         else if(nomeModelo == "Cube"){
@@ -695,7 +697,8 @@ void OGLWidget::carregarEstado(){
             file >> ax >> ay >> az;
             file >> sx >> sy >> sz;
 
-            listaModelos.push_back(new Cube(tx,ty,tz, ax,ay,az, sx,sy,sz));
+            //listaModelos.push_back(new Cube(tx,ty,tz, ax,ay,az, sx,sy,sz));
+            listaModelos.push_back(new Cube());
         }
 
         else if(nomeModelo == "Arvore"){
@@ -703,7 +706,8 @@ void OGLWidget::carregarEstado(){
             file >> ax >> ay >> az;
             file >> sx >> sy >> sz;
 
-            listaModelos.push_back(new Tree(tx,ty,tz, ax,ay,az, sx,sy,sz));
+            //listaModelos.push_back(new Tree(tx,ty,tz, ax,ay,az, sx,sy,sz));
+            listaModelos.push_back(new Tree());
         }
 
         else if(nomeModelo == "Luz"){
@@ -711,7 +715,8 @@ void OGLWidget::carregarEstado(){
             file >> ax >> ay >> az;
             file >> sx >> sy >> sz;
 
-            listaModelos.push_back(new Luz(tx,ty,tz, ax,ay,az, sx,sy,sz));
+            //listaModelos.push_back(new Luz(tx,ty,tz, ax,ay,az, sx,sy,sz));
+            listaModelos.push_back(new Luz());
         }
 
         else if(nomeModelo == "Kratos" || nomeModelo == "Mario" || nomeModelo == "Boy" || nomeModelo == "Shelf"){
@@ -724,7 +729,8 @@ void OGLWidget::carregarEstado(){
 
             string param = diretorio+nomeModelo+extensao;
 
-            listaModelos.push_back(new ObjModelLoader(param, nomeModelo, tx,ty,tz, ax,ay,az, sx,sy,sz));
+            //listaModelos.push_back(new ObjModelLoader(param, nomeModelo, tx,ty,tz, ax,ay,az, sx,sy,sz));
+            listaModelos.push_back(new ObjModelLoader(param, nomeModelo));
         }
 
         else if(nomeModelo == "Esqueleto" || nomeModelo == "Cachorro" || nomeModelo == "Lobo"){
@@ -737,7 +743,11 @@ void OGLWidget::carregarEstado(){
 
             string param = diretorio+nomeModelo+extensao;
 
-            listaModelos.push_back(new TdsModelLoader(param, nomeModelo, tx,ty,tz, ax,ay,az, sx,sy,sz));
+            //listaModelos.push_back(new TdsModelLoader(param, nomeModelo, tx,ty,tz, ax,ay,az, sx,sy,sz));
+            //string 2 * char
+            const char * pm = param.c_str();
+
+            listaModelos.push_back(new TdsModelLoader(pm, nomeModelo));
         }
 
     }
@@ -759,9 +769,12 @@ void OGLWidget::carregarModelo3D3DS(string caminho, string nome)
 
 void OGLWidget::iniciaLuz()
 {
+    /*
     Luz * luz = new Luz(5.0,5.0,5.0,
                         0.0,0.0,0.0,
                         1.0,1.0,1.0);
+    */
+    Luz * luz = new Luz();
     this->listaModelos.push_back(luz);
 }
 

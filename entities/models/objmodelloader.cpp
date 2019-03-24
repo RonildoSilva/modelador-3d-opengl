@@ -7,84 +7,6 @@ ObjModelLoader::ObjModelLoader()
 
 }
 
-ObjModelLoader::ObjModelLoader(string filename, string nomeModelo,
-        float tx, float ty, float tz, float ax, float ay, float az, float sx, float sy, float sz){
-    this->tx = tx;
-    this->ty = ty;
-    this->tz = tz;
-
-    this->ax = ax;
-    this->ay = ay;
-    this->az = az;
-
-    this->sx = sx;
-    this->sy = sy;
-    this->sz = sz;
-
-    this->filename = filename;
-    this->nome = nomeModelo;
-
-    fstream *objFile = new fstream;
-    objFile->open(filename, ios_base::in);
-
-    if (!objFile->is_open())
-    {
-        cout << "O arquivo [" << filename << "] não pode ser lido." << endl;
-        exit(EXIT_FAILURE);
-    }
-
-    string currentLine;
-
-    while (!objFile->eof())
-    {
-        getline(*objFile, currentLine);
-
-        // Split
-        vector<string> *parameters = this->GetSplittedStrings(currentLine, ' ');
-
-        //CASO V (Vertices)
-        if (parameters->at(0) == "v")
-        {
-            // Remove 'v'
-            parameters->erase(parameters->begin());
-
-            vector<float> *currentPoint = new vector<float>;
-
-            for (int index = 0; index < parameters->size(); index++)
-            {
-                // String (x, y, z) to Float (x, y, z)
-                currentPoint->push_back(this->GetFloatFromString(parameters->at(index)));
-            }
-            vertices->push_back(currentPoint);
-        }
-
-        //CASO F (Faces)
-        else if (parameters->at(0) == "f")
-        {
-            // Remove 'f'
-            parameters->erase(parameters->begin());
-
-            vector<int> *vertexIndexes = new vector<int>;
-
-            for (int index = 0; index < parameters->size(); index++)
-            {
-                // String (face_index) to Int (face_index)
-                int faceIndex = this->GetFloatFromString(parameters->at(index));
-
-                // Obj possui index a partir de 1
-                // A origem deve ser 0
-                vertexIndexes->push_back(--faceIndex);
-            }
-
-            faces->push_back(vertexIndexes);
-        }
-
-        delete parameters;
-    }
-
-    objFile->close();
-}
-
 ObjModelLoader::ObjModelLoader(string filename, string nome)
 {
     this->filename = filename;
@@ -244,44 +166,8 @@ void ObjModelLoader::desenha()
     glPopMatrix();
 }
 
-float ObjModelLoader::getAX() { return this->ax; }
-float ObjModelLoader::getAY() { return this->ay; }
-float ObjModelLoader::getAZ() { return this->az; }
-
 float ObjModelLoader::getSize() {}
 void ObjModelLoader::setSize(float size){}
-
-void ObjModelLoader::addAX(float ax) { this->ax+=ax; }
-void ObjModelLoader::addAY(float ay) { this->ay+=ay; }
-void ObjModelLoader::addAZ(float az) { this->az+=az; }
-
-void ObjModelLoader::setAX(float ax) { this->ax = ax; }
-void ObjModelLoader::setAY(float ay) { this->ay = ay; }
-void ObjModelLoader::setAZ(float az) { this->az = az; }
-
-void ObjModelLoader::addSX(float sx) { this->sx+=sx; }
-void ObjModelLoader::addSY(float sy) { this->sy+=sy; }
-void ObjModelLoader::addSZ(float sz) { this->sz+=sz; }
-
-void ObjModelLoader::setSX(float sx) { this->sx = sx; }
-void ObjModelLoader::setSY(float sy) { this->sy = sy; }
-void ObjModelLoader::setSZ(float sz) { this->sz = sz; }
-
-float ObjModelLoader::getSX() { return this->sx; }
-float ObjModelLoader::getSY() { return this->sy; }
-float ObjModelLoader::getSZ() { return this->sz; }
-
-void ObjModelLoader::setTX(float tx) { this->tx = tx; }
-void ObjModelLoader::setTY(float ty) { this->ty = ty; }
-void ObjModelLoader::setTZ(float tz) { this->tz = tz; }
-
-float ObjModelLoader::getTX() { return this->tx; }
-float ObjModelLoader::getTY() { return this->ty; }
-float ObjModelLoader::getTZ() { return this->tz; }
-
-void ObjModelLoader::addTX(float tx) { this->tx+=tx; }
-void ObjModelLoader::addTY(float ty) { this->ty+=ty; }
-void ObjModelLoader::addTZ(float tz) { this->tz+=tz; }
 
 void ObjModelLoader::addSlices(){}
 void ObjModelLoader::addStacks(){}
@@ -290,15 +176,6 @@ void ObjModelLoader::decSlices(){}
 void ObjModelLoader::decStacks(){}
 int ObjModelLoader::getSlices(){}
 int ObjModelLoader::getStacks(){}
-
-void ObjModelLoader::setSelecionado(bool selecionado) { this->selecionado = selecionado; }
-bool ObjModelLoader::isSelecionado() { return this->selecionado; }
-
-void ObjModelLoader::setSombra(bool sombra) { this->sombra = sombra; }
-bool ObjModelLoader::isSombra() { return this->sombra; }
-
-void ObjModelLoader::setEixo(bool eixo) { this->eixo = eixo; }
-bool ObjModelLoader::isEixo() { return this->eixo; }
 
 string ObjModelLoader::getNome() { return this->nome; }
 

@@ -4,62 +4,6 @@ using namespace std;
 
 Tree::Tree() { this->nome = "Arvore"; }
 int numberCups = 2;
-Tree::Tree(
-        float tx, float ty, float tz,
-        float ax, float ay, float az,
-        float sx, float sy, float sz)
-{
-    this->tx = tx;
-    this->ty = ty;
-    this->tz = tz;
-
-    this->ax = ax;
-    this->ay = ay;
-    this->az = az;
-
-    this->sx = sx;
-    this->sy = sy;
-    this->sz = sz;
-
-    this->nome = "Arvore";
-}
-
-float Tree::getAX(){ return this->ax; }
-float Tree::getAY(){ return this->ay; }
-float Tree::getAZ(){ return this->az; }
-
-void Tree::addAX(float ax){ this->ax += ax; }
-void Tree::addAY(float ay){ this->ay += ay; }
-void Tree::addAZ(float az){ this->az += az; }
-
-void Tree::setAX(float ax) { this->ax = ax; }
-void Tree::setAY(float ay) { this->ay = ay; }
-void Tree::setAZ(float az) { this->az = az; }
-
-void Tree::addSY(float sy) { this->sy+=sy; }
-void Tree::addSX(float sx) { this->sx+=sx; }
-void Tree::addSZ(float sz) { this->sz+=sz; }
-
-void Tree::setSX(float sx) { this->sx = sx; }
-void Tree::setSY(float sy) { this->sy = sy; }
-void Tree::setSZ(float sz) { this->sz = sz; }
-
-void Tree::addTX(float tx) { this->tx+=tx; }
-void Tree::addTY(float ty) { this->ty+=ty; }
-void Tree::addTZ(float tz) { this->tz+=tz; }
-
-float Tree::getSX() { return this->sx; }
-float Tree::getSY() { return this->sy; }
-float Tree::getSZ() { return this->sz; }
-
-void Tree::setTX(float tx) { this->tx = tx; }
-void Tree::setTY(float ty) { this->ty = ty; }
-void Tree::setTZ(float tz) { this->tz = tz; }
-
-float Tree::getTX() { return this->tx; }
-float Tree::getTY() { return this->ty; }
-float Tree::getTZ() { return this->tz; }
-
 void Tree::addSlices() { this->slices++; }
 void Tree::decSlices() { this->slices--; }
 
@@ -129,30 +73,8 @@ void Tree::desenha(){
     glPopMatrix();
 }
 
-bool Tree::isSelecionado(){
-    return this->selecionado;
-}
-
-void Tree::setEixo(bool eixo)
-{
-    this->eixo = eixo;
-}
-
-bool Tree::isEixo()
-{
-    return this->eixo;
-}
-
-void Tree::setSombra(bool sombra) { this->sombra = sombra; }
-bool Tree::isSombra() { return this->sombra; }
-
 string Tree::getNome()
 {
     return this->nome;
-}
-
-
-void Tree::setSelecionado(bool selecionado){
-    this->selecionado = selecionado;
 }
 

@@ -12,32 +12,6 @@ TdsModelLoader::TdsModelLoader(const char *name, std::string filename) {
     lib3ds_file_eval(file,0);
 }
 
-TdsModelLoader::TdsModelLoader(std::__cxx11::string filename, std::string nomeModelo,
-        float tx, float ty, float tz, float ax, float ay, float az, float sx, float sy, float sz){
-    this->tx = tx;
-    this->ty = ty;
-    this->tz = tz;
-
-    this->ax = ax;
-    this->ay = ay;
-    this->az = az;
-
-    this->sx = sx;
-    this->sy = sy;
-    this->sz = sz;
-
-    this->filename = filename;
-    this->nome = nomeModelo;
-
-    file=lib3ds_file_load(filename.c_str());
-
-    if (!file) {
-      puts("3dsplayer: Error: Loading 3DS file failed.\n");
-      exit(1);
-    }
-    lib3ds_file_eval(file,0);
-}
-
 TdsModelLoader::~TdsModelLoader()
 {
     lib3ds_file_free(file);
@@ -326,44 +300,8 @@ void TdsModelLoader::desenha()
     glPopMatrix();
 }
 
-float TdsModelLoader::getAX() { return this->ax; }
-float TdsModelLoader::getAY() { return this->ay; }
-float TdsModelLoader::getAZ() { return this->az; }
-
 float TdsModelLoader::getSize() {}
 void TdsModelLoader::setSize(float size){}
-
-void TdsModelLoader::addAX(float ax) { this->ax+=ax; }
-void TdsModelLoader::addAY(float ay) { this->ay+=ay; }
-void TdsModelLoader::addAZ(float az) { this->az+=az; }
-
-void TdsModelLoader::setAX(float ax) { this->ax = ax; }
-void TdsModelLoader::setAY(float ay) { this->ay = ay; }
-void TdsModelLoader::setAZ(float az) { this->az = az; }
-
-void TdsModelLoader::addSX(float sx) { this->sx+=sx; }
-void TdsModelLoader::addSY(float sy) { this->sy+=sy; }
-void TdsModelLoader::addSZ(float sz) { this->sz+=sz; }
-
-void TdsModelLoader::setSX(float sx) { this->sx = sx; }
-void TdsModelLoader::setSY(float sy) { this->sy = sy; }
-void TdsModelLoader::setSZ(float sz) { this->sz = sz; }
-
-float TdsModelLoader::getSX() { return this->sx; }
-float TdsModelLoader::getSY() { return this->sy; }
-float TdsModelLoader::getSZ() { return this->sz; }
-
-void TdsModelLoader::setTX(float tx) { this->tx = tx; }
-void TdsModelLoader::setTY(float ty) { this->ty = ty; }
-void TdsModelLoader::setTZ(float tz) { this->tz = tz; }
-
-float TdsModelLoader::getTX() { return this->tx; }
-float TdsModelLoader::getTY() { return this->ty; }
-float TdsModelLoader::getTZ() { return this->tz; }
-
-void TdsModelLoader::addTX(float tx) { this->tx+=tx; }
-void TdsModelLoader::addTY(float ty) { this->ty+=ty; }
-void TdsModelLoader::addTZ(float tz) { this->tz+=tz; }
 
 void TdsModelLoader::addSlices(){}
 void TdsModelLoader::addStacks(){}
@@ -372,14 +310,5 @@ void TdsModelLoader::decSlices(){}
 void TdsModelLoader::decStacks(){}
 int TdsModelLoader::getSlices(){}
 int TdsModelLoader::getStacks(){}
-
-void TdsModelLoader::setSelecionado(bool selecionado) { this->selecionado = selecionado; }
-bool TdsModelLoader::isSelecionado() { return this->selecionado; }
-
-void TdsModelLoader::setSombra(bool sombra) { this->sombra = sombra; }
-bool TdsModelLoader::isSombra() { return this->sombra; }
-
-void TdsModelLoader::setEixo(bool eixo) { this->eixo = eixo; }
-bool TdsModelLoader::isEixo() { return this->eixo; }
 
 std::string TdsModelLoader::getNome() { return this->nome; }

@@ -6,8 +6,7 @@ using namespace std;
 
 Torus::Torus() { this->nome = "Torus"; }
 
-Torus::Torus(float innerRadius, float outterRadius, int slices, int stacks,
-             float tx, float ty, float tz, float ax, float ay, float az, float sx, float sy, float sz)
+Torus::Torus(float innerRadius, float outterRadius, int slices, int stacks)
 {
     this->innerRadius = innerRadius;
     this->outterRadius = outterRadius;
@@ -17,76 +16,9 @@ Torus::Torus(float innerRadius, float outterRadius, int slices, int stacks,
     this->slices = slices;
     this->stacks = stacks;
 
-    this->tx = tx;
-    this->ty = ty;
-    this->tz = tz;
-
-    this->ax = ax;
-    this->ay = ay;
-    this->az = az;
-
-    this->sx = sx;
-    this->sy = sy;
-    this->sz = sz;
-
     this->nome = "Torus";
 }
 
-Torus::Torus(
-        float tx, float ty, float tz,
-        float ax, float ay, float az,
-        float sx, float sy, float sz)
-{
-    this->tx = tx;
-    this->ty = ty;
-    this->tz = tz;
-
-    this->ax = ax;
-    this->ay = ay;
-    this->az = az;
-
-    this->sx = sx;
-    this->sy = sy;
-    this->sz = sz;
-
-    this->nome = "Torus";
-}
-
-float Torus::getAX(){ return this->ax; }
-float Torus::getAY(){ return this->ay; }
-float Torus::getAZ(){ return this->az; }
-
-void Torus::addAX(float ax){ this->ax += ax; }
-void Torus::addAY(float ay){ this->ay += ay; }
-void Torus::addAZ(float az){ this->az += az; }
-
-void Torus::setAX(float ax) { this->ax = ax; }
-void Torus::setAY(float ay) { this->ay = ay; }
-void Torus::setAZ(float az) { this->az = az; }
-
-void Torus::addSY(float sy) { this->sy+=sy; }
-void Torus::addSX(float sx) { this->sx+=sx; }
-void Torus::addSZ(float sz) { this->sz+=sz; }
-
-void Torus::setSX(float sx) { this->sx = sx; }
-void Torus::setSY(float sy) { this->sy = sy; }
-void Torus::setSZ(float sz) { this->sz = sz; }
-
-void Torus::addTX(float tx) { this->tx+=tx; }
-void Torus::addTY(float ty) { this->ty+=ty; }
-void Torus::addTZ(float tz) { this->tz+=tz; }
-
-float Torus::getSX() { return this->sx; }
-float Torus::getSY() { return this->sy; }
-float Torus::getSZ() { return this->sz; }
-
-void Torus::setTX(float tx) { this->tx = tx; }
-void Torus::setTY(float ty) { this->ty = ty; }
-void Torus::setTZ(float tz) { this->tz = tz; }
-
-float Torus::getTX() { return this->tx; }
-float Torus::getTY() { return this->ty; }
-float Torus::getTZ() { return this->tz; }
 
 void Torus::addSlices() { this->slices++; }
 void Torus::decSlices() { this->slices--; }
@@ -151,17 +83,4 @@ void Torus::setOutterRadius(float outterRadius)
     this->outterRadius = outterRadius;
 }
 
-bool Torus::isSelecionado() { return this->selecionado; }
-
-void Torus::setEixo(bool eixo) { this->eixo = eixo; }
-bool Torus::isEixo() { return this->eixo; }
-
-void Torus::setSombra(bool sombra) { this->sombra = sombra; }
-bool Torus::isSombra() { return this->sombra; }
-
 string Torus::getNome() { return this->nome; }
-
-
-void Torus::setSelecionado(bool selecionado){
-    this->selecionado = selecionado;
-}
