@@ -6,11 +6,13 @@
 
 #include "oglwidget.h"
 #include "entities/torus.h"
+#include "entities/teapot.h"
 
 using namespace  std;
 
 vector<Model*> listaModelos;
 Torus * torus;
+Teapot * teapot;
 
 OGLWidget::OGLWidget(QWidget *parent)
     : QGLWidget(parent)
@@ -22,7 +24,8 @@ OGLWidget::OGLWidget(QWidget *parent)
 void OGLWidget::initializeGL()
 {
     torus = new Torus();
-    listaModelos.push_back(torus);
+    teapot = new Teapot();
+    listaModelos.push_back(teapot);
 
     glClearColor(1,1,1,1);
     //glClearColor(0.3,0.3,0.3,1.0);
@@ -99,6 +102,9 @@ void OGLWidget::paintGL()
     glPopMatrix();
     */
     torus->desenha();
+    for (int var = 0; var < listaModelos.size(); ++var) {
+        listaModelos.at(var)->desenha();
+    }
     //listaModelos.at(0)->desenha();
 
     displayEnd();

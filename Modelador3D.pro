@@ -17,7 +17,13 @@ LIBS += -lGLU -lglut
 
 SOURCES += main.cpp \
     entities/torus.cpp \
-    entities/model.cpp
+    entities/model.cpp \
+    entities/tree.cpp \
+    entities/teapot.cpp \
+    entities/cube.cpp \
+    entities/luz.cpp \
+    bib/Extra.cpp \
+    bib/GUI.cpp
 
 SOURCES += mainwindow.cpp \
     bib/Camera.cpp \
@@ -36,7 +42,13 @@ HEADERS  += mainwindow.h \
     bib/Vetor3D.h \
     oglwidget.h \
     entities/torus.h \
-    entities/model.h
+    entities/model.h \
+    entities/tree.h \
+    entities/teapot.h \
+    entities/cube.h \
+    entities/luz.h \
+    bib/Extra.h \
+    bib/GUI.h
 
 FORMS    += mainwindow.ui
 
