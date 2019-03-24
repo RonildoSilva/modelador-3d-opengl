@@ -16,8 +16,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_slicestackSubButton_clicked();
-    void on_slicestackAddButton_clicked();
     void on_removerObjButton_clicked();
 
     void on_nextObject_clicked();
