@@ -2,59 +2,48 @@
 #define TORUS_H
 
 #include <GL/glut.h>
-
 #include <bib/CameraDistante.h>
 #include <bib/Desenha.h>
-
 #include <entities/model.h>
 
-class Torus : public Model
+class Torus: public Model
 {
 public:
     Torus();
-    void desenha();
+    Torus(float innerRadius, float outterRadius,
+          int slices, int stacks);
 
-    float getAX();
-    float getAY();
-    float getAZ();
+    void desenha() override;
 
-    void addAX(float ax);
-    void addAY(float ay);
-    void addAZ(float az);
+    float getInnerRadius();
+    float getOutterRadius();
 
-    void addTX(float tx);
-    void addTY(float ty);
-    void addTZ(float tz);
+    void setInnerRadius(float innerRadius);
+    void setOutterRadius(float outterRadius);
 
-    float getSX();
-    float getSY();
-    float getSZ();
+    void addSlices() override;
+    void addStacks() override;
+    void decSlices() override;
+    void decStacks() override;
 
-    int addSlices(int slice);
-    int addStacks(int stack);
+    int getSlices() override;
+    int getStacks() override;
 
-    int getSlices();
-    int getStacks();
+
+    std::string getNome() override;
 
 private:
-    int slices = 10;
-    int stacks = 10;
+    std::string nome = "Torus";
+
+    float innerRadius = 0.2;
+    float outterRadius = 0.8;
+
+    int slices = 15;
+    int stacks = 15;
 
     float trans_obj = false;
 
-    float tx = 0.0;
-    float ty = 0.0;
-    float tz = 0.0;
-
-    float ax = 0.0;
-    float ay = 0.0;
-    float az = 0.0;
-
     float delta = 5.0;
-
-    float sx = 1.0;
-    float sy = 1.0;
-    float sz = 1.0;
 };
 
 #endif // TORUS_H

@@ -4,90 +4,83 @@
 
 using namespace std;
 
-Torus::Torus()
+Torus::Torus() { this->nome = "Torus"; }
+
+Torus::Torus(float innerRadius, float outterRadius, int slices, int stacks)
 {
-    cout << "Torus";
+    this->innerRadius = innerRadius;
+    this->outterRadius = outterRadius;
+    if(slices < 3){ this->slices = 3; }
+    if(stacks < 3){ this->stacks = 3; }
+
+    this->slices = slices;
+    this->stacks = stacks;
+
+    this->nome = "Torus";
 }
 
-float Torus::getAX(){
-    return this->ax;
-}
 
-void Torus::addAX(float ax){
-    this->ax += ax;
-}
+void Torus::addSlices() { this->slices++; }
+void Torus::decSlices() { this->slices--; }
 
-float Torus::getAY(){
-    return this->ay;
-}
+void Torus::addStacks() { this->stacks++; }
+void Torus::decStacks() { this->stacks--; }
 
-void Torus::addAY(float ay){
-    this->ay += ay;
-}
-
-float Torus::getAZ(){
-    return this->az;
-}
-
-void Torus::addAZ(float az){
-    this->az += az;
-}
-
-void Torus::addTX(float tx)
-{
-    this->tx+=tx;
-}
-
-void Torus::addTY(float ty)
-{
-    this->ty+=ty;
-}
-
-void Torus::addTZ(float tz)
-{
-    this->tz+=tz;
-}
-
-int Torus::addSlices(int slice)
-{
-    this->slices+=slice;
-}
-
-int Torus::addStacks(int stack)
-{
-    this->stacks+=stack;
-}
-
-int Torus::getSlices()
-{
-    return this->slices;
-}
-
-int Torus::getStacks()
-{
-    return this->stacks;
-}
+int Torus::getSlices() { return this->slices; }
+int Torus::getStacks() { return this->stacks; }
 
 void Torus::desenha(){
     //sistema local
     glPushMatrix();
         //composicao de transformacoes
-        glTranslated(tx,ty,tz);
-        glRotated(az,0,0,1);
-        glRotated(ay,0,1,0);
-        glRotated(ax,1,0,0);
-        glScaled(sx,sy,sz);
+        glTranslated(this->getTX(),this->getTY(),this->getTZ());
+
+        glRotated(this->getAX(),0,0,1);
+        glRotated(this->getAY(),0,1,0);
+        glRotated(this->getAZ(),1,0,0);
+
+        glScaled(this->getSX(),this->getSX(),this->getSZ());
+
         //desenhando eixos do sistema de coordenadas local 1
-          Desenha::drawEixos( 0.5 );
+        if(isEixo()){
+            Desenha::drawEixos( 0.5 );
+        }
+         //glColor3d(0,1,0);
         //desenhando objeto
-        glColor3d(1,0,0);
-        //glColor3d(0,0,1);
-        //glColor3f(1,0.6,0);
-        glutSolidTorus(0.2,0.8,slices,stacks);
-        //glutWireTorus(0.2,0.8,slices,stacks);
-        //glutSolidTeapot(0.6);
-        //glutWireTeapot(0.6);
-        //Desenha::drawBox( 0.0,0.0,0.0, 1.0,1.0,1.0 );
-        //Desenha::drawBox( -1.0,-1.0,-1.0, 1.0,1.0,1.0 );
+          if(isSelecionado()){
+              glColor3f(0.22,1.0,0.07);
+          }
+          else if (isSombra()){
+              glColor3f(0.0,0.0,0.0);
+          }
+          else{
+              glColor3f(0.1,0.0,0.8);
+          }
+
+        glutSolidTorus(this->getInnerRadius(),this->getOutterRadius(),
+                       this->getSlices(),this->getStacks());
+
     glPopMatrix();
 }
+
+float Torus::getInnerRadius()
+{
+    return this->innerRadius;
+}
+
+float Torus::getOutterRadius()
+{
+    return this->outterRadius;
+}
+
+void Torus::setInnerRadius(float innerRadius)
+{
+    this->innerRadius = innerRadius;
+}
+
+void Torus::setOutterRadius(float outterRadius)
+{
+    this->outterRadius = outterRadius;
+}
+
+string Torus::getNome() { return this->nome; }

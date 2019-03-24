@@ -151,16 +151,16 @@ void OGLWidget::keyPressEvent(QKeyEvent *event)
 
         case Qt::Key_Plus:
         case Qt::Key_M:
-            torus->addSlices(1);
-            torus->addStacks(1);
+            torus->addSlices();
+            torus->addStacks();
             break;
 
         case Qt::Key_Minus:
         case Qt::Key_N:
             if (torus->getSlices() > 3 && torus->getStacks() > 3)
             {
-                torus->addSlices(-1);
-                torus->addStacks(-1);
+                torus->decSlices();
+                torus->decStacks();
             }
             break;
 
