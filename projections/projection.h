@@ -7,7 +7,8 @@ class Projection
 {
 public:
     Projection();
-    const GLfloat *getPerspectiveProjectionMatrix(float near, float far, float aspect_ratio, Camera *camera);
+    GLfloat *getProjectionFrustumMatrix(float near, float far, float aspect_ratio, Camera *camera);
+    GLfloat *getProjectionPerspectiveMatrix(float angleOfView, float near, float far, float aspect_ratio, Camera *camera);
 };
 
 #endif // PROJECTION_H

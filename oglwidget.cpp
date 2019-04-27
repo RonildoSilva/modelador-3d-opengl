@@ -18,11 +18,6 @@
 #include "entities/models/objmodelloader.h"
 #include "entities/models/tdsmodelloader.h"
 
-
-Projection* projection = new Projection();
-
-//Definir posição da luz
-//GLfloat posicao_luz[] = {5.1f,5.1f,5.1f,5.1f};
 float trans_obj = false;
 float trans_luz = false;
 
@@ -94,14 +89,18 @@ void transformacao_camera_2_global(Vetor3D e, Vetor3D c, Vetor3D u, bool mostra_
 void OGLWidget::paintGL()
 {
 
+    /**
     if(isPerspective){
-        displayPerspective();
+        displayFrustum();
     }
     else if(isOrtogonal){
         displayOrtho();
     }else{
         displayInit();
     }
+    **/
+
+    displayPerspective();
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -198,48 +197,32 @@ void OGLWidget::displayOrtho(){
     gluLookAt(cam->e.x,cam->e.y,cam->e.z, cam->c.x,cam->c.y,cam->c.z, cam->u.x,cam->u.y,cam->u.z);
 }
 
-void OGLWidget::displayPerspective()
-{
-    /** MAGIA **/
-    /*
-    float maxx = std::max(fabs(cam->u.x), fabs(cam->u.y));
-    float maxy = std::max(fabs(cam->u.y), fabs(cam->u.y));
-    float max = std::max(maxx, maxy);
-    float r = max * ar, t = max;
-    float l = -r, b = -t;
-    float n = 0.1;
-    float f = 20;
-
-    // set OpenGL perspective projection matrix
-    float M [16];
-        M[0] = 2 / (r - l);
-        M[1] = 0;
-        M[2] = 0;
-        M[3] = 0;
-
-        M[4] = 0;
-        M[5] = 2 / (t - b);
-        M[6] = 0;
-        M[7] = 0;
-
-        M[8] = 0;
-        M[9] = 0;
-        M[10] = -2 / (f - n);
-        M[11] = 0;
-
-        M[12] = -(r + l) / (r - l);
-        M[13] = -(t + b) / (t - b);
-        M[14] = -(f + n) / (f - n);
-        M[15] = 1;
-
-*/
+void OGLWidget::displayPerspective(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glViewport(0, 0, width, height);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    glMultTransposeMatrixf(projection->getPerspectiveProjectionMatrix(0.1, 10000, ar, cam));
+    GLfloat * M = projection->getProjectionPerspectiveMatrix(78,0.1, 10000, ar, cam);
+    glMultTransposeMatrixf(M);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    gluLookAt(cam->e.x,cam->e.y,cam->e.z, cam->c.x,cam->c.y,cam->c.z, cam->u.x,cam->u.y,cam->u.z);
+}
+
+void OGLWidget::displayFrustum()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glViewport(0, 0, width, height);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    GLfloat * M = projection->getProjectionFrustumMatrix(0.1, 10000, ar, cam);
+    glMultTransposeMatrixf(M);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
