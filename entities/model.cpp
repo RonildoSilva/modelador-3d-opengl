@@ -3,6 +3,21 @@
 Model::Model() {}
 
 /** **/
+void Model::init(float tx, float ty, float tz, float ax, float ay, float az, float sx, float sy, float sz) {
+    this->tx = tx;
+    this->ty = ty;
+    this->tz = tz;
+
+    this->ax = ax;
+    this->ay = ay;
+    this->az = az;
+
+    this->sx = sx;
+    this->sy = sy;
+    this->sz = sz;
+}
+
+
 float Model::getAX() { return this->ax; }
 float Model::getAY() { return this->ay; }
 float Model::getAZ() { return this->az; }

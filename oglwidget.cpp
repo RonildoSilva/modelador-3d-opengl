@@ -18,6 +18,9 @@
 #include "entities/models/objmodelloader.h"
 #include "entities/models/tdsmodelloader.h"
 
+
+Projection* projection = new Projection();
+
 //Definir posição da luz
 //GLfloat posicao_luz[] = {5.1f,5.1f,5.1f,5.1f};
 float trans_obj = false;
@@ -198,6 +201,7 @@ void OGLWidget::displayOrtho(){
 void OGLWidget::displayPerspective()
 {
     /** MAGIA **/
+    /*
     float maxx = std::max(fabs(cam->u.x), fabs(cam->u.y));
     float maxy = std::max(fabs(cam->u.y), fabs(cam->u.y));
     float max = std::max(maxx, maxy);
@@ -228,14 +232,14 @@ void OGLWidget::displayPerspective()
         M[14] = -(f + n) / (f - n);
         M[15] = 1;
 
-
+*/
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glViewport(0, 0, width, height);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    glMultTransposeMatrixf(M);
+    glMultTransposeMatrixf(projection->getPerspectiveProjectionMatrix(0.1, 10000, ar, cam));
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -516,16 +520,18 @@ void OGLWidget::carregarEstado(){
             file >> ax >> ay >> az;
             file >> sx >> sy >> sz;
 
-            //listaModelos.push_back(new Torus(tx, ty, tz, ax, ay, az, sx, sy, sz));
-            listaModelos.push_back(new Torus());
+            Torus * torus = new Torus();
+            torus->init(tx, ty, tz, ax, ay, az, sx, sy, sz);
+            listaModelos.push_back(torus);
         }
         else if(nomeModelo == "Teapot"){
             file >> tx >> ty >> tz;
             file >> ax >> ay >> az;
             file >> sx >> sy >> sz;
 
-            //listaModelos.push_back(new Teapot(tx,ty,tz, ax,ay,az, sx,sy,sz));
-            listaModelos.push_back(new Teapot());
+            Teapot * teapot = new Teapot();
+            teapot->init(tx,ty,tz, ax,ay,az, sx,sy,sz);
+            listaModelos.push_back(teapot);
         }
 
         else if(nomeModelo == "Cube"){
@@ -533,8 +539,9 @@ void OGLWidget::carregarEstado(){
             file >> ax >> ay >> az;
             file >> sx >> sy >> sz;
 
-            //listaModelos.push_back(new Cube(tx,ty,tz, ax,ay,az, sx,sy,sz));
-            listaModelos.push_back(new Cube());
+            Cube * cube = new Cube();
+            cube->init(tx,ty,tz, ax,ay,az, sx,sy,sz);
+            listaModelos.push_back(cube);
         }
 
         else if(nomeModelo == "Arvore"){
@@ -542,8 +549,10 @@ void OGLWidget::carregarEstado(){
             file >> ax >> ay >> az;
             file >> sx >> sy >> sz;
 
-            //listaModelos.push_back(new Tree(tx,ty,tz, ax,ay,az, sx,sy,sz));
-            listaModelos.push_back(new Tree());
+            Tree * tree = new Tree();
+            tree->init(tx,ty,tz, ax,ay,az, sx,sy,sz);
+
+            listaModelos.push_back(tree);
         }
 
         else if(nomeModelo == "Luz"){
@@ -551,8 +560,9 @@ void OGLWidget::carregarEstado(){
             file >> ax >> ay >> az;
             file >> sx >> sy >> sz;
 
-            //listaModelos.push_back(new Luz(tx,ty,tz, ax,ay,az, sx,sy,sz));
-            listaModelos.push_back(new Luz());
+            Luz * luz = new Luz();
+            luz->init(tx,ty,tz, ax,ay,az, sx,sy,sz);
+            listaModelos.push_back(luz);
         }
 
         else if(nomeModelo == "Kratos" || nomeModelo == "Mario" || nomeModelo == "Boy" || nomeModelo == "Shelf"){
@@ -564,9 +574,10 @@ void OGLWidget::carregarEstado(){
             file >> sx >> sy >> sz;
 
             string param = diretorio+nomeModelo+extensao;
+            ObjModelLoader * objModelLoader = new ObjModelLoader(param, nomeModelo);
+            objModelLoader->init(tx,ty,tz, ax,ay,az, sx,sy,sz);
 
-            //listaModelos.push_back(new ObjModelLoader(param, nomeModelo, tx,ty,tz, ax,ay,az, sx,sy,sz));
-            listaModelos.push_back(new ObjModelLoader(param, nomeModelo));
+            listaModelos.push_back(objModelLoader);
         }
 
         else if(nomeModelo == "Esqueleto" || nomeModelo == "Cachorro" || nomeModelo == "Lobo"){
@@ -579,11 +590,12 @@ void OGLWidget::carregarEstado(){
 
             string param = diretorio+nomeModelo+extensao;
 
-            //listaModelos.push_back(new TdsModelLoader(param, nomeModelo, tx,ty,tz, ax,ay,az, sx,sy,sz));
             //string 2 * char
             const char * pm = param.c_str();
 
-            listaModelos.push_back(new TdsModelLoader(pm, nomeModelo));
+            TdsModelLoader * tdsModelLoader = new TdsModelLoader(pm, nomeModelo);
+            tdsModelLoader->init(tx, ty, tz, ax, ay, az, sx, sy, sz);
+            listaModelos.push_back(tdsModelLoader);
         }
 
     }
@@ -605,12 +617,10 @@ void OGLWidget::carregarModelo3D3DS(string caminho, string nome)
 
 void OGLWidget::iniciaLuz()
 {
-    /*
-    Luz * luz = new Luz(5.0,5.0,5.0,
-                        0.0,0.0,0.0,
-                        1.0,1.0,1.0);
-    */
     Luz * luz = new Luz();
+    luz->init(5.0,5.0,5.0,
+              0.0,0.0,0.0,
+              1.0,1.0,1.0);
     this->listaModelos.push_back(luz);
 }
 

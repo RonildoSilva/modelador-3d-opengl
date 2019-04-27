@@ -4,7 +4,7 @@ using namespace std;
 
 Projection::Projection() {}
 
-float* Projection::getPerspectiveProjectionMatrix(float near, float far, float aspect_ratio, Camera *camera){
+const GLfloat* Projection::getPerspectiveProjectionMatrix(float near, float far, float aspect_ratio, Camera *camera){
 
     float maxx = std::max(fabs(camera->u.x), fabs(camera->u.y));
     float maxy = std::max(fabs(camera->u.y), fabs(camera->u.y));
@@ -15,7 +15,7 @@ float* Projection::getPerspectiveProjectionMatrix(float near, float far, float a
     float f = far;
 
     // set OpenGL perspective projection matrix
-    float M [16];
+    GLfloat M [16];
         M[0] = 2 / (r - l);
         M[1] = 0;
         M[2] = 0;

@@ -11,8 +11,8 @@
 class Model
 {
 public:
+    virtual void init(float tx, float ty, float tz, float ax, float ay, float az, float sx, float sy, float sz);
     Model();
-
     virtual void desenha() = 0;
 
     /** Manipulation Angle Functions **/

@@ -73,7 +73,7 @@ public:
 
     Camera* cam = new CameraDistante(19.5323,9.36482,24.4429,-0.0726667,0.927333,0,-0.162686,0.965604,-0.202832);
     //Camera* cam = new CameraDistante(0,0,0, 0,0,0, 0,0,0);
-    Projection* projection = new Projection();
+
     float savedCamera[9];
 
     bool islistaVazia();
