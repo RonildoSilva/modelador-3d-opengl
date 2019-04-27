@@ -197,16 +197,14 @@ void OGLWidget::displayOrtho(){
 
 void OGLWidget::displayPerspective()
 {
-    float near = 0.1;
-    float far = 100;
-
+    /** MAGIA **/
     float maxx = std::max(fabs(cam->u.x), fabs(cam->u.y));
     float maxy = std::max(fabs(cam->u.y), fabs(cam->u.y));
     float max = std::max(maxx, maxy);
     float r = max * ar, t = max;
     float l = -r, b = -t;
-    float n = near;
-    float f = far;
+    float n = 0.1;
+    float f = 20;
 
     // set OpenGL perspective projection matrix
     float M [16];
@@ -229,6 +227,7 @@ void OGLWidget::displayPerspective()
         M[13] = -(t + b) / (t - b);
         M[14] = -(f + n) / (f - n);
         M[15] = 1;
+
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glViewport(0, 0, width, height);

@@ -26,7 +26,7 @@ SOURCES += main.cpp \
     bib/GUI.cpp \
     bib/Extra.cpp \
     entities/luz.cpp \
-    projection.cpp
+    projections/projection.cpp
 
 SOURCES += mainwindow.cpp \
     bib/Camera.cpp \
@@ -54,7 +54,7 @@ HEADERS  += mainwindow.h \
     bib/GUI.h \
     bib/Extra.h \
     entities/luz.h \
-    projection.h
+    projections/projection.h
 
 FORMS    += mainwindow.ui
 
