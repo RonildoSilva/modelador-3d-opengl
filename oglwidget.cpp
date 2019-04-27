@@ -91,7 +91,7 @@ void OGLWidget::paintGL()
 
     /**
     if(isPerspective){
-        displayFrustum();
+        displayPerspective();
     }
     else if(isOrtogonal){
         displayOrtho();
@@ -99,8 +99,8 @@ void OGLWidget::paintGL()
         displayInit();
     }
     **/
-
-    displayPerspective();
+    //displayPerspective();
+    //displayOrtho();
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -132,64 +132,13 @@ void OGLWidget::paintGL()
 
 void OGLWidget::displayOrtho(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     glViewport(0, 0, width, height);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    /*
-    gluPerspective(50.0, ar, 1, 1000);
-    void gluPerspective(	GLdouble fovy,
-    GLdouble aspect,
-    GLdouble zNear,
-    GLdouble zFar);
-    */
-
-    float near = 1;
-    float fovy = 50.0;
-    float top = tan(fovy/2) * near;
-    float bottom = -top;
-    float right = top * ar;
-    float left = -top * ar;
-    float M[4][4];
-
-    //Matriz de projecão
-    /*
-    M[0][0] = 2 * near / (right - left);
-    M[0][1] = 0;
-    M[0][2] = 0;
-    M[0][3] = 0;
-
-    M[1][0] = 0;
-    M[1][1] = 2 * near / (top - bottom);
-    M[1][2] = 0;
-    M[1][3] = 0;
-
-    M[2][0] = (right + left) / (right - left);
-    M[2][1] = (top + bottom) / (top - bottom);
-    M[2][2] = -(fovy + near) / (fovy - near);
-    M[2][3] = -1;
-
-    M[3][0] = 0;
-    M[3][1] = 0;
-    M[3][2] = -2 * fovy * near / (fovy - near);
-    M[3][3] = 0;
-    */
-
-    float zNeg[16] = {
-        2 * near / (right - left), 0.0, 0.0, 0.0,
-        0.0, 2 * near / (top - bottom), 0.0, 0.0,
-        (right + left) / (right - left), (top + bottom) / (top - bottom),-(fovy + near) / (fovy - near), -1.0,
-        0.0, -2 * fovy * near / (fovy - near), 0.0, 1.0
-    };
-
-    //glMultTransposeMatrixf( zNeg );
-
-    //let ritg bottom top
-    gluOrtho2D(50.0, ar, 1, 1000);
-    //glFrustum(-10,10,-10,10, 1, 1000);
-
+    GLfloat * M = projection->getProjectionOrthoMatrix(0.1, 20, ar, cam);
+    glMultTransposeMatrixf(M);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -204,24 +153,12 @@ void OGLWidget::displayPerspective(){
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    GLfloat * M = projection->getProjectionPerspectiveMatrix(78,0.1, 10000, ar, cam);
-    glMultTransposeMatrixf(M);
+    GLfloat * M = projection->getProjectionPerspectiveMatrix(13, 1.0, 20, ar, cam);
+    cout << "--------------\n";
+    for (int var = 0; var < 16; ++var) {
+        cout << M[var] << endl;
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    gluLookAt(cam->e.x,cam->e.y,cam->e.z, cam->c.x,cam->c.y,cam->c.z, cam->u.x,cam->u.y,cam->u.z);
-}
-
-void OGLWidget::displayFrustum()
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glViewport(0, 0, width, height);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-
-    GLfloat * M = projection->getProjectionFrustumMatrix(0.1, 10000, ar, cam);
+    }
     glMultTransposeMatrixf(M);
 
     glMatrixMode(GL_MODELVIEW);

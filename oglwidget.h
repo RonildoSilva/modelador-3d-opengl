@@ -25,7 +25,6 @@ public:
     void paintGL();
         void displayInit();
         void displayPerspective();
-        void displayFrustum();
         void displayOrtho();
         void displayEnd();
     void resizeGL(int w, int h);
