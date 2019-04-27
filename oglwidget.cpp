@@ -41,14 +41,11 @@ void OGLWidget::initializeGL()
 {
     carregaCamera();
     iniciaLuz();
-
-    glClearColor(1,1,1,1);
-    //glClearColor(0,0,0,1);
+    glClearColor(0.5,0.5,0.5,1);
 
     glEnable(GL_LIGHTING);
     glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_CULL_FACE);
-    //glCullFace(GL_BACK);
     glEnable(GL_NORMALIZE); //mantem a qualidade da iluminacao mesmo quando glScalef eh usada
 
     //glShadeModel(GL_SMOOTH);
@@ -56,7 +53,7 @@ void OGLWidget::initializeGL()
 
     glEnable(GL_DEPTH_TEST);
 
-    //    //definindo uma luz
+    //definindo uma luz
     glEnable(GL_LIGHT0);
 
     const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
