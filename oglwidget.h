@@ -87,6 +87,7 @@ private:
 
     int width = 800;
     int height = 600;
+    float ar = height>0 ? (float) width / (float) height : 1.0;
 
     int slices = 20;
     int stacks = 20;

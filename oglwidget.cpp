@@ -131,10 +131,8 @@ void OGLWidget::paintGL()
     displayEnd();
 }
 
-void OGLWidget::displayPerspective(){
+void OGLWidget::displayOrtho(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    const float ar = height>0 ? (float) width / (float) height : 1.0;
 
     glViewport(0, 0, width, height);
 
@@ -189,7 +187,8 @@ void OGLWidget::displayPerspective(){
 
     //glMultTransposeMatrixf( zNeg );
 
-    gluPerspective(50.0, ar, 1, 1000);
+    //let ritg bottom top
+    gluOrtho2D(50.0, ar, 1, 1000);
     //glFrustum(-10,10,-10,10, 1, 1000);
 
 
@@ -199,40 +198,48 @@ void OGLWidget::displayPerspective(){
     gluLookAt(cam->e.x,cam->e.y,cam->e.z, cam->c.x,cam->c.y,cam->c.z, cam->u.x,cam->u.y,cam->u.z);
 }
 
-void OGLWidget::displayOrtho()
+void OGLWidget::displayPerspective()
 {
+    float near = 0.1;
+    float far = 100;
+
+    float maxx = std::max(fabs(cam->u.x), fabs(cam->u.y));
+    float maxy = std::max(fabs(cam->u.y), fabs(cam->u.y));
+    float max = std::max(maxx, maxy);
+    float r = max * ar, t = max;
+    float l = -r, b = -t;
+    float n = near;
+    float f = far;
+
+    // set OpenGL perspective projection matrix
+    float M [16];
+        M[0] = 2 / (r - l);
+        M[1] = 0;
+        M[2] = 0;
+        M[3] = 0;
+
+        M[4] = 0;
+        M[5] = 2 / (t - b);
+        M[6] = 0;
+        M[7] = 0;
+
+        M[8] = 0;
+        M[9] = 0;
+        M[10] = -2 / (f - n);
+        M[11] = 0;
+
+        M[12] = -(r + l) / (r - l);
+        M[13] = -(t + b) / (t - b);
+        M[14] = -(f + n) / (f - n);
+        M[15] = 1;
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    const float ar = height>0 ? (float) width / (float) height : 1.0;
-
     glViewport(0, 0, width, height);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    /*
-    float zNeg[16] = {
-                            1.0, 0.0, 0.0, 0.0,
-                            0.0, 1.0, 0.0, 0.0,
-                            0.0, 0.0,-1.0, 0.0,
-                            0.0, 0.0, 0.0, 1.0
-                    };
-
-    glMultTransposeMatrixf( zNeg );
-    */
-
-    /*
-        glOrtho(left, right, bottom, top, near, far)
-        left: minimum x we see
-        right: maximum x we see
-        bottom: minimum y we see
-        top: maximum y we see
-        -near: minimum z we see. Yes, this is -1 times near. So a negative input means positive z.
-        -far: maximum z we see. Also negative.
-    */
-    glOrtho(-4.0 * ar, 4.0 * ar, -1.0, 5.0, 0.1, 100);
-
-
+    glMultTransposeMatrixf(M);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

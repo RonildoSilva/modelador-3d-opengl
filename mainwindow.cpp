@@ -50,6 +50,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::on_slicestackSubButton_clicked(){
+    QKeyEvent * eve1 = new QKeyEvent (QEvent::KeyPress,Qt::Key_N,Qt::NoModifier,"N");
+    ui->openGLWidget->keyPressEvent(eve1);
+}
+
+void MainWindow::on_slicestackAddButton_clicked(){
+    QKeyEvent * eve1 = new QKeyEvent (QEvent::KeyPress,Qt::Key_M,Qt::NoModifier,"M");
+    ui->openGLWidget->keyPressEvent(eve1);
+}
+
 void MainWindow::on_nextObject_clicked(){
     QKeyEvent * eve1 = new QKeyEvent (QEvent::KeyPress,Qt::Key_Right,Qt::NoModifier,"Key_Right");
     ui->openGLWidget->keyPressEvent(eve1);
