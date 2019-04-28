@@ -23,6 +23,9 @@ Globals * globals = new Globals();
 
 Luz * luz = new Luz();
 
+enum View {PERSPECTIVE, ORTHOGONAL};
+View view;
+
 float trans_obj = false;
 float trans_luz = false;
 
@@ -34,7 +37,7 @@ int indice_luz = -1;
 Camera* cam2 = new CameraDistante(-3,2,-5, 0,0,0, 0,1,0);
 
 void OGLWidget::drawQuadPlane(float coo[][3], float normal[3]){
-    glDisable(GL_CULL_FACE);
+    //glDisable(GL_CULL_FACE);
 
     glBegin(GL_QUADS);
       glNormal3f(normal[0],normal[1],normal[2]);
@@ -53,6 +56,8 @@ OGLWidget::OGLWidget(QWidget *parent)
 
 void OGLWidget::initializeGL()
 {
+    view = PERSPECTIVE;
+
     carregaCamera();
     iniciaLuz();
     glClearColor(0.5,0.5,0.5,1);
@@ -93,19 +98,16 @@ void OGLWidget::initializeGL()
 
 void OGLWidget::paintGL()
 {
-
-    /**
-    if(isPerspective){
-        displayPerspective();
+    switch (view) {
+        case PERSPECTIVE:
+            displayPerspective();
+            break;
+        case ORTHOGONAL:
+            displayOrtho();
+            break;
+        default:
+            break;
     }
-    else if(isOrtogonal){
-        displayOrtho();
-    }else{
-        displayInit();
-    }
-    **/
-    displayPerspective();
-    //displayOrtho();
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -337,10 +339,12 @@ void OGLWidget::keyPressEvent(QKeyEvent *event)
         }
         break;
     case Qt::Key_P:
-        isPerspective = !isPerspective;
+        //isPerspective = !isPerspective;
+        view = PERSPECTIVE;
         break;
     case Qt::Key_O:
-        isOrtogonal = !isOrtogonal;
+        //isOrtogonal = !isOrtogonal;
+        view = ORTHOGONAL;
         break;
     }
 }
