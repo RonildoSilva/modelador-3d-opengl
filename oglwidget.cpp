@@ -35,6 +35,7 @@ Camera* cam2 = new CameraDistante(-3,2,-5, 0,0,0, 0,1,0);
 
 void OGLWidget::drawQuadPlane(float coo[][3], float normal[3]){
     glDisable(GL_CULL_FACE);
+
     glBegin(GL_QUADS);
       glNormal3f(normal[0],normal[1],normal[2]);
       for (int i = 0; i < 4; i++) {
@@ -120,6 +121,11 @@ void OGLWidget::paintGL()
     glPopMatrix();
 
     /** Objetos estaticos para projecao de sombra **/
+    //Left wall  0
+    //Right wall 1
+    //Back wall  2
+    //Floor      3
+
     //Parede Esquerda
     glPushMatrix();
         glEnable(GL_POLYGON_OFFSET_FILL);
@@ -128,44 +134,80 @@ void OGLWidget::paintGL()
         glDisable(GL_POLYGON_OFFSET_FILL);
     glPopMatrix();
 
+    //Fundo
+    glPushMatrix();
+        glEnable(GL_POLYGON_OFFSET_FILL);
+        glPolygonOffset(1.0f,1.0f);
+        drawQuadPlane(globals->back_wall, globals->normals[2]);
+        glDisable(GL_POLYGON_OFFSET_FILL);
+    glPopMatrix();
+
     //Piso
     glPushMatrix();
         glEnable(GL_POLYGON_OFFSET_FILL);
         glPolygonOffset(1.0f,1.0f);
-        drawQuadPlane(globals->ground, globals->normals[2]);
+        drawQuadPlane(globals->ground, globals->normals[3]);
         glDisable(GL_POLYGON_OFFSET_FILL);
     glPopMatrix();
+
 
     /** Sombras **/
     glPushMatrix();
         if(listaModelos.size() > 0){
             for (unsigned int index = 0; index < listaModelos.size(); ++index) {
-                glPushMatrix();
-                    //Finds the plane for floor based on three known points
-                    float * plane_ground = projection->getCalculatedPlane(
-                                globals->ground[0],globals->ground[1],globals->ground[2]);
-                    //Makes shadowMatrix for the floor
-                    float light_position [] = {luz->getIndex(), luz->getTX(), luz->getTY(),luz->getTZ()};
-                    float * shadow_ground = projection->getshadowMatrix(
-                                plane_ground, light_position);
+                if(listaModelos.at(index)->isSombra()){
+                    float light_position []
+                            = {luz->getIndex(), luz->getTX(), luz->getTY(),luz->getTZ()};
 
-                        float tx = listaModelos.at(index)->getTX();
-                        float ty = listaModelos.at(index)->getTY();
-                        float tz = listaModelos.at(index)->getTZ();
+                    tx = listaModelos.at(index)->getTX();
+                    ty = listaModelos.at(index)->getTY();
+                    tz = listaModelos.at(index)->getTZ();
 
-                        float ax = listaModelos.at(index)->getAX();
-                        float ay = listaModelos.at(index)->getAY();
-                        float az = listaModelos.at(index)->getAZ();
+                    ax = listaModelos.at(index)->getAX();
+                    ay = listaModelos.at(index)->getAY();
+                    az = listaModelos.at(index)->getAZ();
 
-                        float sx = listaModelos.at(index)->getSX();
-                        float sy = listaModelos.at(index)->getSY();
-                        float sz = listaModelos.at(index)->getSZ();
+                    sx = listaModelos.at(index)->getSX();
+                    sy = listaModelos.at(index)->getSY();
+                    sz = listaModelos.at(index)->getSZ();
 
                     glTranslatef(tx, ty, tz);
+                    glScalef(sx,sy,sz);
+                    glRotatef(ax,1,0,0);
+                    glRotatef(ay,0,1,0);
+                    glRotatef(az,0,0,1);
+
+                glPushMatrix();
+                    float * plane_ground = projection->getCalculatedPlane(
+                                globals->ground[0],globals->ground[1],globals->ground[2]);
+                    float * shadow_ground = projection->getshadowMatrix(
+                                plane_ground, light_position);
                     glMultMatrixf(shadow_ground);
                     glMultTransposeMatrixf(shadow_ground);
                     listaModelos.at(index)->desenha();
                 glPopMatrix();
+
+                glPushMatrix();
+                    float * plane_back = projection->getCalculatedPlane(
+                                globals->back_wall[0],globals->back_wall[1],globals->back_wall[2]);
+                    float * shadow_back = projection->getshadowMatrix(
+                                plane_back, light_position);
+                    glMultMatrixf(shadow_back);
+                    glMultTransposeMatrixf(shadow_back);
+                    listaModelos.at(index)->desenha();
+                glPopMatrix();
+
+                glPushMatrix();
+                    float * plane_left = projection->getCalculatedPlane(
+                                globals->left_wall[0],globals->left_wall[1],globals->left_wall[2]);
+                    float * shadow_left = projection->getshadowMatrix(
+                                plane_left, light_position);
+                    glMultMatrixf(shadow_left);
+                    glMultTransposeMatrixf(shadow_left);
+                    listaModelos.at(index)->desenha();
+                glPopMatrix();
+
+                }
             }
         }
     glPopMatrix();

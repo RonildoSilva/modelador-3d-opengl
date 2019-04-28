@@ -96,6 +96,18 @@ private:
     int slices = 20;
     int stacks = 20;
 
+    float ax;
+    float ay;
+    float az;
+
+    float tx;
+    float ty;
+    float tz;
+
+    float sx;
+    float sy;
+    float sz;
+
     float trans_obj = false;
 
     float delta = 5.0;
