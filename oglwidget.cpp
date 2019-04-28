@@ -18,6 +18,11 @@
 #include "entities/models/objmodelloader.h"
 #include "entities/models/tdsmodelloader.h"
 
+#include "globals/globals.h"
+Globals * globals = new Globals();
+
+Luz * luz = new Luz();
+
 float trans_obj = false;
 float trans_luz = false;
 
@@ -27,6 +32,16 @@ bool isOrtogonal = false;
 int indice_luz = -1;
 
 Camera* cam2 = new CameraDistante(-3,2,-5, 0,0,0, 0,1,0);
+
+void OGLWidget::drawQuadPlane(float coo[][3], float normal[3]){
+    glDisable(GL_CULL_FACE);
+    glBegin(GL_QUADS);
+      glNormal3f(normal[0],normal[1],normal[2]);
+      for (int i = 0; i < 4; i++) {
+        glVertex3f(coo[i][0],coo[i][1],coo[i][2]);
+      }
+    glEnd();
+}
 
 OGLWidget::OGLWidget(QWidget *parent)
     : QGLWidget(parent)
@@ -75,17 +90,6 @@ void OGLWidget::initializeGL()
     glMaterialfv(GL_FRONT, GL_SHININESS, high_shininess);
 }
 
-void transformacao_camera_2_global(Vetor3D e, Vetor3D c, Vetor3D u, bool mostra_matriz = false){
-    //matriz de transformacao
-    float transform[16] = {
-        1.0,    0.0,    0.0,    0.0,
-        0.0,    1.0,    0.0,    0.0,
-        0.0,    0.0,    1.0,    0.0,
-        0.0,    0.0,    0.0,    1.0
-    };
-    glMultTransposeMatrixf( transform );
-}
-
 void OGLWidget::paintGL()
 {
 
@@ -99,7 +103,7 @@ void OGLWidget::paintGL()
         displayInit();
     }
     **/
-    //displayPerspective();
+    displayPerspective();
     //displayOrtho();
 
     glMatrixMode(GL_MODELVIEW);
@@ -115,6 +119,57 @@ void OGLWidget::paintGL()
         Desenha::drawGrid( 15, 0, 15, 1 );
     glPopMatrix();
 
+    /** Objetos estaticos para projecao de sombra **/
+    //Parede Esquerda
+    glPushMatrix();
+        glEnable(GL_POLYGON_OFFSET_FILL);
+        glPolygonOffset(1.0f,1.0f);
+        drawQuadPlane(globals->left_wall, globals->normals[0]);
+        glDisable(GL_POLYGON_OFFSET_FILL);
+    glPopMatrix();
+
+    //Piso
+    glPushMatrix();
+        glEnable(GL_POLYGON_OFFSET_FILL);
+        glPolygonOffset(1.0f,1.0f);
+        drawQuadPlane(globals->ground, globals->normals[2]);
+        glDisable(GL_POLYGON_OFFSET_FILL);
+    glPopMatrix();
+
+    /** Sombras **/
+    glPushMatrix();
+        if(listaModelos.size() > 0){
+            for (unsigned int index = 0; index < listaModelos.size(); ++index) {
+                glPushMatrix();
+                    //Finds the plane for floor based on three known points
+                    float * plane_ground = projection->getCalculatedPlane(
+                                globals->ground[0],globals->ground[1],globals->ground[2]);
+                    //Makes shadowMatrix for the floor
+                    float light_position [] = {luz->getIndex(), luz->getTX(), luz->getTY(),luz->getTZ()};
+                    float * shadow_ground = projection->getshadowMatrix(
+                                plane_ground, light_position);
+
+                        float tx = listaModelos.at(index)->getTX();
+                        float ty = listaModelos.at(index)->getTY();
+                        float tz = listaModelos.at(index)->getTZ();
+
+                        float ax = listaModelos.at(index)->getAX();
+                        float ay = listaModelos.at(index)->getAY();
+                        float az = listaModelos.at(index)->getAZ();
+
+                        float sx = listaModelos.at(index)->getSX();
+                        float sy = listaModelos.at(index)->getSY();
+                        float sz = listaModelos.at(index)->getSZ();
+
+                    glTranslatef(tx, ty, tz);
+                    glMultMatrixf(shadow_ground);
+                    glMultTransposeMatrixf(shadow_ground);
+                    listaModelos.at(index)->desenha();
+                glPopMatrix();
+            }
+        }
+    glPopMatrix();
+
     //Padrao
     glPushMatrix();
         if(listaModelos.size() > 0){
@@ -122,9 +177,6 @@ void OGLWidget::paintGL()
                 listaModelos.at(index)->desenha();
             }
         }
-    glPopMatrix();
-
-    //Escape
     glPopMatrix();
 
     displayEnd();
@@ -137,7 +189,7 @@ void OGLWidget::displayOrtho(){
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    GLfloat * M = projection->getProjectionOrthoMatrix(0.1, 20, ar, cam);
+    GLfloat * M = projection->getProjectionOrthoMatrix(0.002, 10000, ar, cam);
     glMultTransposeMatrixf(M);
 
     glMatrixMode(GL_MODELVIEW);
@@ -154,11 +206,6 @@ void OGLWidget::displayPerspective(){
     glLoadIdentity();
 
     GLfloat * M = projection->getProjectionPerspectiveMatrix(13, 1.0, 20, ar, cam);
-    cout << "--------------\n";
-    for (int var = 0; var < 16; ++var) {
-        cout << M[var] << endl;
-
-    }
     glMultTransposeMatrixf(M);
 
     glMatrixMode(GL_MODELVIEW);
@@ -170,9 +217,6 @@ void OGLWidget::displayPerspective(){
 void OGLWidget::displayInit()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    const float ar = height>0 ? (float) width / (float) height : 1.0;
-
     glViewport(0, 0, width, height);
 
     glMatrixMode(GL_PROJECTION);
@@ -537,7 +581,6 @@ void OGLWidget::carregarModelo3D3DS(string caminho, string nome)
 
 void OGLWidget::iniciaLuz()
 {
-    Luz * luz = new Luz();
     luz->init(5.0,5.0,5.0,
               0.0,0.0,0.0,
               1.0,1.0,1.0);
@@ -548,16 +591,9 @@ void OGLWidget::carregaCamera()
 {
     std::ifstream file("../Modelador3D/camera.txt");
     string nomeModelo;
-
-    GLfloat ex;
-    GLfloat ey;
-    GLfloat ez;
-    GLfloat cx;
-    GLfloat cy;
-    GLfloat cz;
-    GLfloat ux;
-    GLfloat uy;
-    GLfloat uz;
+    GLfloat ex, ey, ez;
+    GLfloat cx, cy, cz;
+    GLfloat ux, uy, uz;
 
     if (!file) {
         cout << "Erro de leitura";
@@ -606,7 +642,7 @@ void OGLWidget::salvarEstado()
     ofstream myfile ("../Modelador3D/state.txt");
     if (myfile.is_open())
     {
-        for (int index = 0; index < listaModelos.size(); ++index) {
+        for (unsigned int index = 0; index < listaModelos.size(); ++index) {
 
             myfile << listaModelos.at(index)->getNome() << " ";
 

@@ -21,6 +21,7 @@ class OGLWidget : public QGLWidget
 {
 public:
     OGLWidget(QWidget *parent = 0);
+    void drawQuadPlane(float coo[][3], float normal[3]);
     void initializeGL();
     void paintGL();
         void displayInit();
@@ -97,22 +98,7 @@ private:
 
     float trans_obj = false;
 
-    /*
-
-    float tx = 0.0;
-    float ty = 0.0;
-    float tz = 0.0;
-
-    float ax = 0.0;
-    float ay = 0.0;
-    float az = 0.0;
-
-    */
     float delta = 5.0;
-
-    float sx = 1.0;
-    float sy = 1.0;
-    float sz = 1.0;
 
     QTimer timer;
     QPoint lastPos;

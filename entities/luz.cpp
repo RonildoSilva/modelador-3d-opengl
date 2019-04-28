@@ -10,6 +10,10 @@ Luz::Luz()
     this->nome = "Luz";
 }
 
+int Luz::getIndex(){
+    return this->indexLight;
+}
+
 /* Não altero a escala */
 void Luz::addSY(float sy) { this->sy = 1.0; }
 void Luz::addSX(float sx) { this->sx = 1.0; }

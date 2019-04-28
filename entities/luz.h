@@ -21,6 +21,8 @@ public:
     void setInnerRadius(float innerRadius);
     void setOutterRadius(float outterRadius);
 
+    int getIndex();
+
     void addSX(float sx);
     void addSY(float sy);
     void addSZ(float sz);
@@ -31,7 +33,7 @@ public:
 
     float getSX();
     float getSY();
-    float getSZ(); 
+    float getSZ();
 
     std::string getNome() override;
 
