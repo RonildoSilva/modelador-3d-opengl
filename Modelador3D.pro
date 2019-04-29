@@ -27,7 +27,8 @@ SOURCES += main.cpp \
     bib/Extra.cpp \
     entities/luz.cpp \
     projections/projection.cpp \
-    globals/globals.cpp
+    globals/globals.cpp \
+    files/filemanipulation.cpp
 
 SOURCES += mainwindow.cpp \
     bib/Camera.cpp \
@@ -56,7 +57,8 @@ HEADERS  += mainwindow.h \
     bib/Extra.h \
     entities/luz.h \
     projections/projection.h \
-    globals/globals.h
+    globals/globals.h \
+    files/filemanipulation.h
 
 FORMS    += mainwindow.ui
 
