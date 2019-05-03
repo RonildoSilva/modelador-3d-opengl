@@ -41,9 +41,33 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionPerspectiva, &QAction::triggered, this, &MainWindow::mudarPerspectiva);
     connect(ui->actionOrtogonal, &QAction::triggered, this, &MainWindow::mudarOrtogonal);
 
+    /** CAMERAS **/
+    connect(ui->actionCamera_01, &QAction::triggered, this, &MainWindow::mudarCameraUm);
+    connect(ui->actionCamera_02, &QAction::triggered, this, &MainWindow::mudarCameraDois);
+    connect(ui->actionSalvar_Camera, &QAction::triggered, this, &MainWindow::salvarCamera);
+    connect(ui->actionResetar_Camera, &QAction::triggered, this, &MainWindow::resetCamera);
+
     connect(ui->eixoXSlider, SIGNAL(valueChanged(int)), this, SLOT(xValueReceived(int)));
     connect(ui->eixoYSlider, SIGNAL(valueChanged(int)), this, SLOT(yValueReceived(int)));
     connect(ui->eixoZSlider, SIGNAL(valueChanged(int)), this, SLOT(zValueReceived(int)));
+
+    /*
+    QVBoxLayout * vLayout = new QVBoxLayout(parent);
+    QScrollArea * scrollArea = new QScrollArea(parent);
+
+    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    scrollArea->setWidgetResizable(false);
+
+    QVBoxLayout * scrollAreaLayout = new QVBoxLayout();
+    QWidget * scrollAreaWidgetContents = new MainWindow(scrollAreaLayout);
+    scrollAreaWidgetContents->setLayout(scrollAreaLayout);
+    scrollAreaLayout->setSizeConstraint(QLayout::SetFixedSize);
+
+    scrollArea->setWidget(scrollAreaWidgetContents);
+    vLayout->addWidget(scrollArea);
+    this->setCentralWidget(parent);
+    */
 }
 
 MainWindow::~MainWindow()
@@ -277,7 +301,7 @@ void MainWindow::spliter(string linha, string delimitador)
     vetores.push_back(::atof(linha.c_str()));
     std::cout << linha << std::endl;
 
-    for (int var = 0; var < vetores.size(); ++var) {
+    for (unsigned int var = 0; var < vetores.size(); ++var) {
         cout << vetores.at(var) << endl;
     }
 
@@ -291,13 +315,22 @@ void MainWindow::spliter(string linha, string delimitador)
         ui->openGLWidget->mudancasTranslacao(vetores.at(0),vetores.at(1),vetores.at(2));
 }
 
-void MainWindow::on_cam01PushButton_clicked() { ui->openGLWidget->mudaCamera(1); }
-void MainWindow::on_cam02PushButton_clicked() { ui->openGLWidget->mudaCamera(2); }
-void MainWindow::on_resetCameraPushButton_clicked() { ui->openGLWidget->carregaCamera(); }
+void MainWindow::mudarCameraUm(){
+    ui->openGLWidget->mudaCamera(1);
+}
 
-void MainWindow::on_salvarCameraPushButton_clicked()
+void MainWindow::mudarCameraDois(){
+    ui->openGLWidget->mudaCamera(2);
+}
+
+void MainWindow::salvarCamera()
 {
     ui->openGLWidget->salvaCamera();
+}
+
+void MainWindow::resetCamera()
+{
+    ui->openGLWidget->carregaCamera();
 }
 
 void MainWindow::sair(){

@@ -238,71 +238,6 @@
      </property>
     </widget>
    </widget>
-   <widget class="QGroupBox" name="groupBox_2">
-    <property name="geometry">
-     <rect>
-      <x>1020</x>
-      <y>260</y>
-      <width>171</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Câmeras</string>
-    </property>
-    <widget class="QPushButton" name="cam01PushButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>61</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Cam 01</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="cam02PushButton">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>30</y>
-       <width>61</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Cam 02</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="resetCameraPushButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>60</y>
-       <width>71</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Reset</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="salvarCameraPushButton">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>60</y>
-       <width>51</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Salvar</string>
-     </property>
-    </widget>
-   </widget>
    <widget class="QPushButton" name="sombraButton">
     <property name="geometry">
      <rect>
@@ -390,6 +325,10 @@
     <property name="title">
      <string>Cameras</string>
     </property>
+    <addaction name="actionCamera_01"/>
+    <addaction name="actionCamera_02"/>
+    <addaction name="actionSalvar_Camera"/>
+    <addaction name="actionResetar_Camera"/>
    </widget>
    <addaction name="menuArquivo"/>
    <addaction name="menuAdicionar"/>
@@ -504,6 +443,26 @@
   <action name="actionOrtogonal">
    <property name="text">
     <string>Ortogonal</string>
+   </property>
+  </action>
+  <action name="actionCamera_01">
+   <property name="text">
+    <string>Camera 01</string>
+   </property>
+  </action>
+  <action name="actionCamera_02">
+   <property name="text">
+    <string>Camera 02</string>
+   </property>
+  </action>
+  <action name="actionSalvar_Camera">
+   <property name="text">
+    <string>Salvar Camera</string>
+   </property>
+  </action>
+  <action name="actionResetar_Camera">
+   <property name="text">
+    <string>Resetar Camera</string>
    </property>
   </action>
  </widget>

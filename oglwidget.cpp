@@ -32,15 +32,10 @@ View view;
 float trans_obj = false;
 float trans_luz = false;
 
-bool isPerspective = false;
-bool isOrtogonal = false;
-
 int indice_luz = -1;
 
-Camera* cam2 = new CameraDistante(-3,2,-5, 0,0,0, 0,1,0);
-
 void OGLWidget::drawQuadPlane(float coo[][3], float normal[3]){
-    //glDisable(GL_CULL_FACE);
+    glDisable(GL_CULL_FACE);
 
     glBegin(GL_QUADS);
       glNormal3f(normal[0],normal[1],normal[2]);
@@ -155,7 +150,6 @@ void OGLWidget::paintGL()
         glDisable(GL_POLYGON_OFFSET_FILL);
     glPopMatrix();
 
-
     /** Sombras **/
     glPushMatrix();
         if(listaModelos.size() > 0){
@@ -219,11 +213,11 @@ void OGLWidget::paintGL()
 
     //Padrao
     glPushMatrix();
-        if(listaModelos.size() > 0){
-            for (unsigned int index = 0; index < listaModelos.size(); ++index) {
-                listaModelos.at(index)->desenha();
-            }
+    if(listaModelos.size() > 0){
+        for (unsigned int index = 0; index < listaModelos.size(); ++index) {
+            listaModelos.at(index)->desenha();
         }
+    }
     glPopMatrix();
 
     displayEnd();
@@ -342,11 +336,9 @@ void OGLWidget::keyPressEvent(QKeyEvent *event)
         }
         break;
     case Qt::Key_P:
-        //isPerspective = !isPerspective;
         view = PERSPECTIVE;
         break;
     case Qt::Key_O:
-        //isOrtogonal = !isOrtogonal;
         view = ORTHOGONAL;
         break;
     }
@@ -356,14 +348,11 @@ void OGLWidget::mousePressEvent(QMouseEvent *event) { lastPos = event->pos(); }
 
 void OGLWidget::mouseMoveEvent(QMouseEvent *event)
 {
-
-
     int x = event->x();
     int y = event->y();
 
     int last_x = lastPos.x();
     int last_y = lastPos.y();
-
 
     //TODO AMBIENTE
     float fator = 10.0;

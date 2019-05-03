@@ -28,4 +28,4 @@ sudo apt-get install libsdl-image1.2-dev
 
 ```
 
-* **Ronildo Oliveira** - *Trabalho Inicial* - [GitHub](https://github.com/RonildoOliveira)
+* **Ronildo Oliveira** - *Modelador 3D* - [GitHub](https://github.com/RonildoOliveira)

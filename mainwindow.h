@@ -56,11 +56,10 @@ private slots:
 
     void spliter(std::string linha, std::string delimitador);
 
-    void on_cam01PushButton_clicked();
-    void on_cam02PushButton_clicked();
-
-    void on_resetCameraPushButton_clicked();
-    void on_salvarCameraPushButton_clicked();
+    void mudarCameraUm();
+    void mudarCameraDois();
+    void salvarCamera();
+    void resetCamera();
 
 private:
     Ui::MainWindow *ui;
