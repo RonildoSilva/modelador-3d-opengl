@@ -25,6 +25,7 @@ FileManipulation * fileManipulation = new FileManipulation();
 Globals * globals = new Globals();
 
 Luz * luz = new Luz();
+float light_position [4];
 
 enum View {PERSPECTIVE, ORTHOGONAL};
 View view;
@@ -76,7 +77,7 @@ void OGLWidget::initializeGL()
     const GLfloat light_ambient[]  = { 0.0f, 0.0f, 0.0f, 1.0f };
     const GLfloat light_diffuse[]  = { 1.0f, 1.0f, 1.0f, 1.0f };
     const GLfloat light_specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-    const GLfloat light_position[] = { 2.0f, 5.0f, 5.0f, 0.0f };
+    //const GLfloat light_position[] = { 2.0f, 5.0f, 5.0f, 0.0f };
 
     const GLfloat mat_ambient[]    = { 0.7f, 0.7f, 0.7f, 1.0f };
     const GLfloat mat_diffuse[]    = { 0.8f, 0.8f, 0.8f, 1.0f };
@@ -121,6 +122,7 @@ void OGLWidget::paintGL()
     glPopMatrix();
 
     /** Objetos estaticos para projecao de sombra **/
+
     //Left wall  0
     //Right wall 1
     //Back wall  2
@@ -150,13 +152,11 @@ void OGLWidget::paintGL()
         glDisable(GL_POLYGON_OFFSET_FILL);
     glPopMatrix();
 
-    /** Sombras **/
+    // Sombras
     glPushMatrix();
         if(listaModelos.size() > 0){
             for (unsigned int index = 0; index < listaModelos.size(); ++index) {
                 if(listaModelos.at(index)->isSombra()){
-                    float light_position []
-                            = {luz->getIndex(), luz->getTX(), luz->getTY(),luz->getTZ()};
 
                     tx = listaModelos.at(index)->getTX();
                     ty = listaModelos.at(index)->getTY();
@@ -179,16 +179,22 @@ void OGLWidget::paintGL()
                 glPushMatrix();
                     float * plane_ground = projection->getCalculatedPlane(
                                 globals->ground[0],globals->ground[1],globals->ground[2]);
+
                     float * shadow_ground = projection->getshadowMatrix(
                                 plane_ground, light_position);
                     glMultMatrixf(shadow_ground);
                     glMultTransposeMatrixf(shadow_ground);
+                    glTranslated(listaModelos.at(index)->getTX(),
+                                 listaModelos.at(index)->getTY(),
+                                 listaModelos.at(index)->getTZ());
+
                     listaModelos.at(index)->desenha();
                 glPopMatrix();
 
                 glPushMatrix();
                     float * plane_back = projection->getCalculatedPlane(
                                 globals->back_wall[0],globals->back_wall[1],globals->back_wall[2]);
+
                     float * shadow_back = projection->getshadowMatrix(
                                 plane_back, light_position);
                     glMultMatrixf(shadow_back);
@@ -199,6 +205,7 @@ void OGLWidget::paintGL()
                 glPushMatrix();
                     float * plane_left = projection->getCalculatedPlane(
                                 globals->left_wall[0],globals->left_wall[1],globals->left_wall[2]);
+
                     float * shadow_left = projection->getshadowMatrix(
                                 plane_left, light_position);
                     glMultMatrixf(shadow_left);
@@ -210,6 +217,8 @@ void OGLWidget::paintGL()
             }
         }
     glPopMatrix();
+
+    /** Objetos estaticos para projecao de sombra **/
 
     //Padrao
     glPushMatrix();
@@ -518,7 +527,13 @@ void OGLWidget::iniciaLuz()
     luz->init(5.0,5.0,5.0,
               0.0,0.0,0.0,
               1.0,1.0,1.0);
+
     this->listaModelos.push_back(luz);
+
+    light_position[0] = 1;
+    light_position[1] = listaModelos.at(0)->getTX();
+    light_position[2] = listaModelos.at(0)->getTY();
+    light_position[3] = listaModelos.at(0)->getTX();
 }
 
 void OGLWidget::carregaCamera()

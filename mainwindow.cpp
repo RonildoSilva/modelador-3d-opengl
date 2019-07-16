@@ -52,6 +52,24 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->eixoZSlider, SIGNAL(valueChanged(int)), this, SLOT(zValueReceived(int)));
 
     /*
+    QVBoxLayout * qBoxLayout = new QVBoxLayout(this);
+
+    for (int var = 0; var < 4; ++var) {
+        QSlider * qSliderA = new QSlider(Qt::Orientation::Horizontal);
+        QSlider * qSliderB = new QSlider(Qt::Orientation::Horizontal);
+        QSlider * qSliderC = new QSlider(Qt::Orientation::Horizontal);
+
+        QGroupBox * gbox = new QGroupBox("Grupo");
+        gbox->setFlat(true);
+
+
+
+        qBoxLayout->addWidget(gbox);
+    }
+    ui->scrollAreaContents->setLayout(qBoxLayout);
+    */
+
+    /*
     QVBoxLayout * vLayout = new QVBoxLayout(parent);
     QScrollArea * scrollArea = new QScrollArea(parent);
 
@@ -234,7 +252,7 @@ void MainWindow::xValueReceived(int x)
         if(ui->sRadioButton->isChecked()){
             ui->eixoXSlider->setMinimum(0);
             ui->eixoXSlider->setMaximum(30);
-            ui->openGLWidget->mudancasEixoX('S', x);
+            ui->openGLWidget->mudancasEixoX('S', x/fator);
         }
     }
 }
@@ -258,7 +276,7 @@ void MainWindow::yValueReceived(int y)
     if(ui->sRadioButton->isChecked()){
         ui->eixoYSlider->setMinimum(0);
         ui->eixoYSlider->setMaximum(30);
-        ui->openGLWidget->mudancasEixoY('S', y);
+        ui->openGLWidget->mudancasEixoY('S', y/fator);
     }
 }
 
@@ -281,7 +299,7 @@ void MainWindow::zValueReceived(int z)
     if(ui->sRadioButton->isChecked()){
         ui->eixoZSlider->setMinimum(0);
         ui->eixoZSlider->setMaximum(30);
-        ui->openGLWidget->mudancasEixoZ('S', z);
+        ui->openGLWidget->mudancasEixoZ('S', z/fator);
     }
 }
 
