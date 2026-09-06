@@ -33,3 +33,6 @@ Concluído. Trabalho acadêmico; não recebe manutenção.
 
 ## Autor
 Ronildo Silva · ronildo.comp@gmail.com
+
+## Histórico do Bitbucket
+As branches `bitbucket/*` trazem o histórico original deste projeto no Bitbucket (`RonildoOliveira/modelador-3d-opengl`), migrado em setembro de 2026.
